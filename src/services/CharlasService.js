@@ -116,6 +116,8 @@ export default class CharlasService {
                 }
             )
             .then(response => {
+                // console.log("Esta es la respuesta del Api");
+                // console.log(response.data);
                 resolve(response.data);
             })
             .catch(error => {
@@ -514,6 +516,28 @@ export default class CharlasService {
             .then(response => resolve(response.data))
             .catch(error => {
                 console.error("Error al obtener los votos de la ronda:", error.response ? error.response.data : error);
+                reject(error);
+            });
+        });
+    }
+
+    getVotoAlumnoRonda(idRonda){
+        return new Promise((resolve, reject) => {
+            const endpoint = 'api/votos/votoalumnoronda/' + idRonda;
+            const token = Cookies.get('bearer_token');
+            axios.get(
+                Global.urlBase + endpoint,
+                {
+                    headers: {
+                        Authorization: token, 
+                    }
+                }
+            )
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+                console.error("Error al obtener los votos alumno de una ronda: ", error.response ? error.response.data : error);
                 reject(error);
             });
         });
